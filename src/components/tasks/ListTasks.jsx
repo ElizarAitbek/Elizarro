@@ -1,25 +1,12 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import {AiOutlineDelete} from "react-icons/ai"
 import styled from 'styled-components'
-import { updateTask } from '../../store/slices/taskSlice'
-import { Cards } from './Cards'
 import { AddTask } from './AddTask'
 import { Button } from '../ui/Button'
 
 
 export const ListTasks = () => {
-    const [titleChanger, setTitleChanger] = useState('')
-    const [valueState, setValueState] = useState(false);
     const { tasks } = useSelector((state) => state.tasks)
-console.log(tasks,'teaaa');
-    const deleteHandeler = (event) => {
-        event.preventDefault()
-    }
-
-    const changeTitleHandler = (event) => {
-        setTitleChanger(event.target.value)
-    }
 
     return (
         <>
@@ -27,11 +14,7 @@ console.log(tasks,'teaaa');
                 tasks.map((element) => (
                     element.title &&
                     <TitleForm key={element.id}>
-                        {/* <TitleInput type="text" value={element.title} onChange={changeTitleHandler}/>
-                        <TitleButton onClick={deleteHandeler}><AiOutlineDelete/></TitleButton> */}
-                        {/* <Button/> */}
                         <AddTask id={element.id} {...element}/>
-                        
                     </TitleForm>
                 ))
             }

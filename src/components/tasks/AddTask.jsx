@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
-import { addCardTask, addTask, setTask } from '../../store/slices/taskSlice';
+import { addInnerTask, addTask, setTask } from '../../store/slices/taskSlice';
 import { FaTimes } from "react-icons/fa"
+import { Button } from '../ui/Button';
 
 
 export const AddTask = ({ id, innerTasks }) => {
@@ -22,19 +23,21 @@ export const AddTask = ({ id, innerTasks }) => {
         }))
         setShowButton(true)
     }
+
     const addCard = () => {
-        dispatch(addCardTask({ id, textValue }))
+        dispatch(addInnerTask({ id, textValue }))
     }
 
     const maptoRender = (
         innerTasks.map((item) =>
-            <li>{item.text}</li>
+            <p>{item.text}</p>
         )
     )
+
     return (
         <>
             <>
-                {!column && <button onClick={() => setColumn(true)}>add column</button>}
+                {!column && <Button setColumn={setColumn}/>}
             </>
 
             { column && 
@@ -75,10 +78,10 @@ const MainForm = styled.div`
 `
 
 const TitleInput = styled.input`
-    font-size: 14px;
+    font-size: 16px;
     display: flex;
     text-align: center;
-    padding: 10px 32px;
+    padding: 5px 32px;
     border-radius: 5px;
     width: 200px;
     border: 1px solid #000;

@@ -6,18 +6,15 @@ import { setTask } from '../../store/slices/taskSlice'
 import { AddTask } from '../tasks/AddTask'
 
 
-export const Button = () => {
-  const { click } = useSelector(state => state.tasks)
-  const dispatch = useDispatch()
+export const Button = ({setColumn}) => {
 
   const clickHandler = () => {
-    dispatch(setTask())
+    setColumn(true)
   }
+
   return (
     <ButtonBlock>
-      {
-        click ? <AddTask/> : <MainButton onClick={clickHandler}><FaPlus />Добавить список</MainButton>
-      }
+      <MainButton onClick={clickHandler}><FaPlus />Добавить список</MainButton>
     </ButtonBlock>
   )
 }

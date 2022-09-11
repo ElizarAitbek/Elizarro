@@ -5,6 +5,7 @@ import { Header } from '../components/ui/Header'
 import { removeUser } from '../store/slices/userSlice'
 import { Navigate } from 'react-router-dom'
 import { Cards } from '../components/tasks/Cards'
+import { ListTasks } from '../components/tasks/ListTasks'
 
 
 export const HomePage = () => {
@@ -18,11 +19,11 @@ export const HomePage = () => {
 
 
 	return (
-		isAuth ? (
+		// isAuth ? (
 			<>
 				<Header removeUser={clickHandler} email={email} />
-				<Cards/>
+				<ListTasks/>
 			</>
-		) : <Navigate to={"/login"} />
+		// ) : <Navigate to={"/login"} />
 	)
 }
