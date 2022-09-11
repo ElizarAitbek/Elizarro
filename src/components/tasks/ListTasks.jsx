@@ -1,9 +1,6 @@
-import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { AddTask } from './AddTask'
-import { Button } from '../ui/Button'
-
 
 export const ListTasks = () => {
     const { tasks } = useSelector((state) => state.tasks)
@@ -13,9 +10,9 @@ export const ListTasks = () => {
             {
                 tasks.map((element) => (
                     element.title &&
-                    <TitleForm key={element.id}>
+                    <MainCard key={element.id}>
                         <AddTask id={element.id} {...element}/>
-                    </TitleForm>
+                    </MainCard>
                 ))
             }
         </>
@@ -33,7 +30,7 @@ const TitleInput = styled.input`
     border: 1px solid #fff;
     margin: 2px;
 `
-const TitleForm = styled.div`
+const MainCard = styled.div`
     display: flex;
     align-items: center;
 `

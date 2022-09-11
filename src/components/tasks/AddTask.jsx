@@ -1,18 +1,16 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
-import { addInnerTask, addTask, setTask } from '../../store/slices/taskSlice';
-import { FaTimes } from "react-icons/fa"
+import { addTask} from '../../store/slices/taskSlice';
 import { Button } from '../ui/Button';
+import { AddInnerTask } from './AddInnerTask';
 
 
 export const AddTask = ({ id, innerTasks }) => {
-    console.log(id, 'innner');
     const [titleValue, setTitleValue] = useState();
     const dispatch = useDispatch();
     const [showButton, setShowButton] = useState(false)
     const [openText, setOpenText] = useState(false)
-    const [textValue, setTextValue] = useState('')
     const [column, setColumn] = useState(false)
 
     const submitHandler = () => {
@@ -24,47 +22,43 @@ export const AddTask = ({ id, innerTasks }) => {
         setShowButton(true)
     }
 
-    const addCard = () => {
-        dispatch(addInnerTask({ id, textValue }))
-    }
-
-    const maptoRender = (
-        innerTasks.map((item) =>
-            <p>{item.text}</p>
+    const listInnerTasks = (
+        innerTasks.map((element) =>
+            <p>{element.text}</p>
         )
     )
 
     return (
         <>
             <>
-                {!column && <Button setColumn={setColumn}/>}
+                {!column && <Button setColumn={setColumn} />}
             </>
 
-            { column && 
+            {column &&
 
-            <MainForm >
-                <TitleInput
-                    type="text"
-                    placeholder='Ввести заголовок задачи'
-                    value={titleValue || ""}
-                    onChange={event => setTitleValue(event.target.value)}
-                />
-                {maptoRender}
-                {openText && <>
-                <textarea
-                 value={textValue} 
-                 onChange={(e) => setTextValue(e.target.value)} autoFocus/>
-                 <button onClick={()=>addCard()}>cart</button>
-                 </>}
-                <ButtonBlock>
-                    {showButton && !openText&& <button onClick={() => {
-                        setOpenText(true)
-
-                    }}>add cart</button>}
-                    {!showButton && <button onClick={submitHandler}>Добавить</button>}
-                    <button ><FaTimes /></button>
-                </ButtonBlock>
-            </MainForm>}
+                <MainForm >
+                    <TitleInput
+                        type="text"
+                        placeholder='Ввести заголовок задачи'
+                        value={titleValue || ""}
+                        onChange={event => setTitleValue(event.target.value)}
+                    />
+                    {listInnerTasks}
+                    {
+                        openText && <AddInnerTask />
+                    }
+                    <ButtonBlock>
+                        {
+                            showButton && !openText && 
+                                <button onClick={() => {
+                                    setOpenText(true)
+                                }}>Добавить карточку</button>
+                        }
+                        {  !showButton && <button onClick={submitHandler}>Добавить задачу</button>}
+                        {/* <button ><FaTimes /></button> */}
+                    </ButtonBlock>
+                </MainForm>
+            }
         </>
     )
 }
@@ -107,7 +101,7 @@ const ButtonBlock = styled.div`
                 }   
         }
 
-        button:last-child {
+        /* button:last-child {
             border: 1px solid #000;
             border-radius: 5px;
             background-color: #fff;
@@ -121,5 +115,5 @@ const ButtonBlock = styled.div`
                     color: #fff;
                     background: #7b0000;
                 }   
-        }
+        } */
 `
