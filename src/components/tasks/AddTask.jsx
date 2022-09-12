@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 import { addTask} from '../../store/slices/taskSlice';
-import { Button } from '../ui/Button';
+import { AddCardButton } from './AddCardButton';
 import { AddInnerTask } from './AddInnerTask';
 
 
@@ -16,7 +16,7 @@ export const AddTask = ({ id, innerTasks }) => {
     const submitHandler = () => {
         dispatch(addTask({
             value: titleValue,
-            id: Math.random(),
+            id: Math.random().toString(),
             innerTasks: []
         }))
         setShowButton(true)
@@ -31,7 +31,7 @@ export const AddTask = ({ id, innerTasks }) => {
     return (
         <>
             <>
-                {!column && <Button setColumn={setColumn} />}
+                {!column && <AddCardButton setColumn={setColumn} />}
             </>
 
             {column &&
@@ -45,7 +45,7 @@ export const AddTask = ({ id, innerTasks }) => {
                     />
                     {listInnerTasks}
                     {
-                        openText && <AddInnerTask />
+                        openText && <AddInnerTask id={id} />
                     }
                     <ButtonBlock>
                         {
@@ -55,7 +55,7 @@ export const AddTask = ({ id, innerTasks }) => {
                                 }}>Добавить карточку</button>
                         }
                         {  !showButton && <button onClick={submitHandler}>Добавить задачу</button>}
-                        {/* <button ><FaTimes /></button> */}
+                    {/* <button ><FaTimes /></button> */}
                     </ButtonBlock>
                 </MainForm>
             }
@@ -100,20 +100,4 @@ const ButtonBlock = styled.div`
                     background: #126100;
                 }   
         }
-
-        /* button:last-child {
-            border: 1px solid #000;
-            border-radius: 5px;
-            background-color: #fff;
-            padding: 2px 8px;
-            cursor: pointer;
-            transition: all .3s;
-            -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
-            -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
-            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
-                :hover {
-                    color: #fff;
-                    background: #7b0000;
-                }   
-        } */
 `

@@ -14,13 +14,14 @@ const taskSlice = createSlice({
     name: "task",
     initialState,
     reducers: {
-        
+
         setTask(state) {
             state.click = !state.click
         },
 
         addTask(state, action) {
             const { value, id, innerTasks } = action.payload
+            
             const newTask = {
                 title: value,
                 id: id,
@@ -30,8 +31,10 @@ const taskSlice = createSlice({
         },
 
         addInnerTask(state, action) {
+
             const { id, innerTaskValue, idAdd } = action.payload;
             const user = state.tasks.find((item) => item.id === id)
+
             user.innerTasks.push({
                 text: innerTaskValue,
                 id: idAdd,

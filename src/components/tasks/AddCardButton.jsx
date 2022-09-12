@@ -3,15 +3,13 @@ import styled from 'styled-components'
 import { FaPlus } from "react-icons/fa"
 import { useDispatch, useSelector } from 'react-redux'
 import { setTask } from '../../store/slices/taskSlice'
-import { AddTask } from '../tasks/AddTask'
+import { AddTask } from './AddTask'
 
 
-export const Button = ({setColumn}) => {
-
+export const AddCardButton = ({setColumn}) => {
   const clickHandler = () => {
     setColumn(true)
   }
-
   return (
     <ButtonBlock>
       <MainButton onClick={clickHandler}><FaPlus />Добавить список</MainButton>
