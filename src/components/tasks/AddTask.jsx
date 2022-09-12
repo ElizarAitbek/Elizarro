@@ -9,7 +9,7 @@ import { BiEdit } from "react-icons/bi"
 import { Modal } from './Modal';
 
 
-export const AddTask = ({ id, innerTasks }) => {
+export const AddTask = ({ id, innerTasks, title }) => {
     const dispatch = useDispatch();
     const [titleValue, setTitleValue] = useState();
     const [showButton, setShowButton] = useState(false)
@@ -51,8 +51,12 @@ export const AddTask = ({ id, innerTasks }) => {
                         onChange={event => setTitleValue(event.target.value)}
                     />
                     {
+                        // rendering inner tasks under main input
                         innerTasks.map((element) =>
-                            <ShowInnerTask onClick={() => setModalActive(true)} key={element.id}> {element.text} <BiEdit  /> </ShowInnerTask>
+                            <>
+                                <ShowInnerTask onClick={() => setModalActive(true)} key={element.id}> {element.text} <BiEdit />  </ShowInnerTask>
+                                <Modal modalActive={modalActive} text={element.text} setModalActive={setModalActive} />
+                            </>
                         )
                     }
                     {
@@ -74,7 +78,7 @@ export const AddTask = ({ id, innerTasks }) => {
                     </ButtonBlock>
                 </MainForm>
             }
-            <Modal active={modalActive} setActive={setModalActive}/>
+
         </>
     )
 }

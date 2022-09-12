@@ -4,14 +4,12 @@ import { AddTask } from './AddTask'
 
 export const ListTasks = () => {
     const { tasks } = useSelector((state) => state.tasks)
-    console.log("tasks >> ",tasks)
     return (
         <MainCard>
             {
                 tasks.map((element) => (
-                    element.title &&
                     <MainBlock key={element.id}>
-                        <AddTask id={element.id} {...element}/>
+                        <AddTask id={element.id} {...element} />
                     </MainBlock >
                 ))
             }

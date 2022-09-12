@@ -1,32 +1,33 @@
 import React from 'react'
 import styled from 'styled-components'
-import { motion, AnimatePresence } from "framer-motion"
+import { RiFileEditFill } from "react-icons/ri"
 
-export const Modal = ({ active, setActive }) => {
+export const Modal = ({ modalActive, setModalActive, text }) => {
     return (
         <>
-            <AnimatePresence>
-                {active && (
-                    <MainModal onClick={() => setActive(false)}>
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 400 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -400 }}
-                        >
-                            <ModalBlock onClick={(e) => e.stopPropagation()}>
-
-                            </ModalBlock>
-                        </motion.div>
-                    </MainModal >
-                )}
-            </AnimatePresence>
+            {modalActive && (
+                <MainModal onClick={() => setModalActive(false)}>
+                    <ModalBlock onClick={(e) => e.stopPropagation()} >
+                        <TitileBLock>
+                            <RiFileEditFill />
+                            <p>{text}</p>
+                        </TitileBLock>
+                        <label>
+                            Добавить описание
+                            <Description
+                                type="text" 
+                                placeholder='Введите текст'
+                            />
+                        </label>
+                    </ModalBlock>
+                </MainModal >
+            )}
         </>
     )
 }
 
 const MainModal = styled.div`
-   height: 100vh;
+    height: 100vh;
     width: 100vw;
     background-color: rgba(0,0,0,0.4);
     position: fixed;
@@ -39,14 +40,43 @@ const MainModal = styled.div`
     transition: 0.5s;
 `
 const ModalBlock = styled.div`
+    box-sizing: border-box;
     padding: 20px;
     border-radius: 25px;
     background-color: white;
-    width: 1000px;
-    height: 1000px;
+    width: 800px;
+    height: 500px;
     text-align: center;
     font-size: 50px;
     transform: scale(0.5);
     transition: 0.4s all;
     color: black;
+`
+const Description = styled.textarea`
+        border-radius: 5px;
+        text-align: center;
+        padding-top: 10px;
+        width: 400px;
+        resize: none;
+        font-size: 30px;
+`
+const TitileBLock = styled.div`
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #000;
+    justify-content: center;
+        p {
+            margin-left: 5px;
+        }
+
+`
+const InnerTaskInput = styled.input`
+    font-size: 16px;
+    display: flex;
+    text-align: center;
+    padding: 5px 32px;
+    border-radius: 5px;
+    margin-bottom: 3px;
+    width: 200px;
+    border: 1px solid #000;
 `
