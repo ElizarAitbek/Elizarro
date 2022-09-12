@@ -4,6 +4,7 @@ import { Header } from '../components/ui/Header'
 import { removeUser } from '../store/slices/userSlice'
 import { Navigate } from 'react-router-dom'
 import { ListTasks } from '../components/tasks/ListTasks'
+import { useEffect } from 'react'
 
 
 export const HomePage = () => {
@@ -15,13 +16,12 @@ export const HomePage = () => {
 		dispatch(removeUser())
 	}
 
-
 	return (
-		// isAuth ? (
+		isAuth ? (
 			<>
 				<Header removeUser={clickHandler} email={email} />
 				<ListTasks/>
 			</>
-		// ) : <Navigate to={"/login"} />
+		) : <Navigate to={"/login"} />
 	)
 }

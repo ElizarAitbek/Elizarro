@@ -37,6 +37,5 @@ const MainButton = styled.button`
 
 `
 const ButtonBlock = styled.div`
-    margin: 40px;
     display: flex;
 `

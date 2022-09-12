@@ -19,9 +19,9 @@ const taskSlice = createSlice({
             state.click = !state.click
         },
 
-        addTask(state, action) {
+            addTask(state, action) {
             const { value, id, innerTasks } = action.payload
-            
+
             const newTask = {
                 title: value,
                 id: id,

@@ -4,7 +4,7 @@ import { AddTask } from './AddTask'
 
 export const ListTasks = () => {
     const { tasks } = useSelector((state) => state.tasks)
-
+    console.log("tasks >> ",tasks)
     return (
         <MainCard>
             {
@@ -23,6 +23,9 @@ const MainCard = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     column-gap: 10px;
+    row-gap: 10px;
+    margin: 40px;
+    align-items: start;
 `
 const MainBlock = styled.div`
     display: flex;
