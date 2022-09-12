@@ -3,21 +3,16 @@ import styled from 'styled-components'
 import { FaPlus } from "react-icons/fa"
 import { useDispatch, useSelector } from 'react-redux'
 import { setTask } from '../../store/slices/taskSlice'
-import { AddTask } from '../tasks/AddTask'
+import { AddTask } from './AddTask'
 
 
-export const Button = () => {
-  const { click } = useSelector(state => state.tasks)
-  const dispatch = useDispatch()
-
+export const AddCardButton = ({setColumn}) => {
   const clickHandler = () => {
-    dispatch(setTask())
+    setColumn(true)
   }
   return (
     <ButtonBlock>
-      {
-        click ? <AddTask/> : <MainButton onClick={clickHandler}><FaPlus />Добавить список</MainButton>
-      }
+      <MainButton onClick={clickHandler}><FaPlus />Добавить список</MainButton>
     </ButtonBlock>
   )
 }
@@ -42,6 +37,5 @@ const MainButton = styled.button`
 
 `
 const ButtonBlock = styled.div`
-    margin: 40px;
     display: flex;
 `

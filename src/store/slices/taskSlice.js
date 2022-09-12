@@ -1,45 +1,49 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    click : false,
-    tasks : [
+    click: false,
+    tasks: [
         {
-            title : 'hello',
-            innerTasks : []
+            title: '',
+            innerTasks: []
         }
     ]
 }
 
 const taskSlice = createSlice({
-    name : "task",
+    name: "task",
     initialState,
-    reducers : {
+    reducers: {
+
         setTask(state) {
             state.click = !state.click
         },
-        addTask(state, action){
-          const {value,id,innerTasks}=action.payload
+
+        addTask(state, action) {
+            const { value, id, innerTasks } = action.payload
+
             const newTask = {
-                title : value,
-                id : id,
-                innerTasks:innerTasks
+                title: value,
+                id: id,
+                innerTasks: innerTasks
             }
             state.tasks.push(newTask)
         },
-        addCardTask(state,action){
-            console.log(action.payload,'pylooo');
-          const {id,textValue ,idAdd}=action.payload;
-          console.log(id,'idid');
-          const user=state.tasks.find((item)=>item.id === id)
-          user.innerTasks.push({
-            text:textValue,
-            id:idAdd,
-          })
+
+        addInnerTask(state, action) {
+
+            const { id, innerTaskValue, idAdd } = action.payload;
+            const user = state.tasks.find((item) => item.id === id)
+
+            user.innerTasks.push({
+                text: innerTaskValue,
+                id: idAdd,
+            })
 
         }
     }
 })
 
-export const { setTask, addTask ,addCardTask} = taskSlice.actions;
+export const { setTask, addTask, addInnerTask } = taskSlice.actions;
 
 export default taskSlice.reducer;

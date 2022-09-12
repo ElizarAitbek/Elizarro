@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { setUser } from "../store/slices/userSlice"
+import { signInWithGoogle } from '../firebase';
 import styled from 'styled-components';
 
 

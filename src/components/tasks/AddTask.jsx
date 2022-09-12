@@ -1,73 +1,90 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
-import { addCardTask, addTask, setTask } from '../../store/slices/taskSlice';
+import { addTask } from '../../store/slices/taskSlice';
+import { AddCardButton } from './AddCardButton';
+import { AddInnerTask } from './AddInnerTask';
 import { FaTimes } from "react-icons/fa"
+import { BiEdit } from "react-icons/bi"
+import { Modal } from './Modal';
 
 
-export const AddTask = ({ id, innerTasks }) => {
-    console.log(id, 'innner');
-    const [titleValue, setTitleValue] = useState();
+export const AddTask = ({ id, innerTasks, title }) => {
     const dispatch = useDispatch();
+    const [titleValue, setTitleValue] = useState();
     const [showButton, setShowButton] = useState(false)
     const [openText, setOpenText] = useState(false)
-    const [textValue, setTextValue] = useState('')
     const [column, setColumn] = useState(false)
+    const [modalActive, setModalActive] = useState(false)
 
     const submitHandler = () => {
-        dispatch(addTask({
-            value: titleValue,
-            id: Math.random(),
-            innerTasks: []
-        }))
-        setShowButton(true)
-    }
-    const addCard = () => {
-        dispatch(addCardTask({ id, textValue }))
+        if (titleValue.trim().length !== 0) {
+            dispatch(addTask({
+                value: titleValue,
+                id: Math.random().toString(),
+                innerTasks: []
+            }))
+            setShowButton(true)
+        } else (
+            alert("error")
+        )
     }
 
-    const maptoRender = (
-        innerTasks.map((item) =>
-            <li>{item.text}</li>
-        )
-    )
+    const denyHandler = () => {
+        setColumn(false)
+    }
+
+
     return (
         <>
             <>
-                {!column && <button onClick={() => setColumn(true)}>add column</button>}
+                {!column && <AddCardButton setColumn={setColumn} />}
             </>
 
-            { column && 
+            {column &&
 
-            <MainForm >
-                <TitleInput
-                    type="text"
-                    placeholder='Ввести заголовок задачи'
-                    value={titleValue || ""}
-                    onChange={event => setTitleValue(event.target.value)}
-                />
-                {maptoRender}
-                {openText && <>
-                <textarea
-                 value={textValue} 
-                 onChange={(e) => setTextValue(e.target.value)} autoFocus/>
-                 <button onClick={()=>addCard()}>cart</button>
-                 </>}
-                <ButtonBlock>
-                    {showButton && !openText&& <button onClick={() => {
-                        setOpenText(true)
+                <MainForm >
+                    <TitleInput
+                        type="text"
+                        placeholder='Ввести заголовок задачи'
+                        value={titleValue || ""}
+                        onChange={event => setTitleValue(event.target.value)}
+                    />
+                    {
+                        // rendering inner tasks under main input
+                        innerTasks.map((element) =>
+                            <>
+                                <ShowInnerTask onClick={() => setModalActive(true)} key={element.id}> {element.text} <BiEdit />  </ShowInnerTask>
+                                <Modal modalActive={modalActive} text={element.text} setModalActive={setModalActive} />
+                            </>
+                        )
+                    }
+                    {
+                        openText && <AddInnerTask id={id} setOpenText={setOpenText} />
+                    }
+                    <ButtonBlock>
+                        {
+                            showButton && !openText &&
+                            <button onClick={() => {
+                                setOpenText(true)
+                            }}>Добавить карточку</button>
+                        }
+                        {!showButton &&
+                            <>
+                                <button onClick={submitHandler}>Добавить задачу</button>
+                                <DenyButton onClick={denyHandler}><FaTimes /></DenyButton>
+                            </>
+                        }
+                    </ButtonBlock>
+                </MainForm>
+            }
 
-                    }}>add cart</button>}
-                    {!showButton && <button onClick={submitHandler}>Добавить</button>}
-                    <button ><FaTimes /></button>
-                </ButtonBlock>
-            </MainForm>}
         </>
     )
 }
 
 const MainForm = styled.div`
-    padding: 0 1px;
+    padding: 5px 10px;
     border-radius: 5px;
     -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
     -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
@@ -75,11 +92,12 @@ const MainForm = styled.div`
 `
 
 const TitleInput = styled.input`
-    font-size: 14px;
+    font-size: 16px;
     display: flex;
     text-align: center;
-    padding: 10px 32px;
+    padding: 5px 32px;
     border-radius: 5px;
+    margin-bottom: 3px;
     width: 200px;
     border: 1px solid #000;
 `
@@ -103,20 +121,30 @@ const ButtonBlock = styled.div`
                     background: #126100;
                 }   
         }
+`
 
-        button:last-child {
-            border: 1px solid #000;
-            border-radius: 5px;
-            background-color: #fff;
-            padding: 2px 8px;
-            cursor: pointer;
-            transition: all .3s;
-            -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
-            -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
-            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
-                :hover {
-                    color: #fff;
-                    background: #7b0000;
-                }   
+const ShowInnerTask = styled.p`
+    margin: 3px;
+    display: flex;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    background: #fff;
+    font-weight: lighter;
+`
+
+const DenyButton = styled.button`
+    text-align: center;
+    padding: 0 4px;
+    transition: all .3s;
+    border: 1px solid #000;
+    background: #fff;
+    border-radius: 5px;
+        :hover {
+            color: #fff;
+            background: #7b0000;
         }
 `
